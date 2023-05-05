@@ -46,8 +46,9 @@ locals {
   bastion_name            = "${local.resource_name}-bastion"
   bastion_pip_name        = "${local.resource_name}-bastion-pip"
   acr_account_name        = "${random_pet.this.id}${random_id.this.dec}acr"
-  cluster_path            = "./aks/istio/cluster-config"
-  flux_repository         = "https://github.com/briandenicola/kubernetes"
+  kv_name                 = "${local.resource_name}-kv"
+  cluster_path            = "./cluster-config"
+  flux_repository         = "https://github.com/briandenicola/privatelink-service-demo"
   vnet_cidr               = cidrsubnet("10.0.0.0/8", 8, random_integer.vnet_cidr.result)
   fw_subnet_cidr          = cidrsubnet(local.vnet_cidr, 8, 0)
   pe_subnet_cidir         = cidrsubnet(local.vnet_cidr, 8, 1)
@@ -62,7 +63,7 @@ resource "azurerm_resource_group" "this" {
   location = local.location
 
   tags = {
-    Application = "httpdemo"
+    Application = "bookstore"
     Components  = "aks; aks-overlay;aks-vnet-injection"
     DeployedOn  = timestamp()
   }
