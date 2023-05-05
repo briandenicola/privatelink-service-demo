@@ -1,13 +1,6 @@
 # Overview
-## Components 
-## Architecture
-
+# Architecture Diagram
 # Infrastructure
-## Prerequisites
 ## Deployment 
-
-# Application Deployment 
-
 # Validate
-
 # Backlog 
