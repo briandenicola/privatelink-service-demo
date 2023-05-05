@@ -45,7 +45,7 @@ locals {
   eventhub_namespace_name = "${local.resource_name}-eventhub-namespace"
   bastion_name            = "${local.resource_name}-bastion"
   bastion_pip_name        = "${local.resource_name}-bastion-pip"
-  acr_account_name                = "${random_pet.this.id}${random_id.this.dec}acr"
+  acr_account_name        = "${random_pet.this.id}${random_id.this.dec}acr"
   cluster_path            = "./aks/istio/cluster-config"
   flux_repository         = "https://github.com/briandenicola/kubernetes"
   vnet_cidr               = cidrsubnet("10.0.0.0/8", 8, random_integer.vnet_cidr.result)

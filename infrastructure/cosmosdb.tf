@@ -13,7 +13,7 @@ resource "azurerm_cosmosdb_account" "this" {
 
   geo_location {
     location          = azurerm_resource_group.this.location
-    failover_priority = 1
+    failover_priority = 0
   }
 }
 
