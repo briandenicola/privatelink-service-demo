@@ -80,3 +80,13 @@ resource "azurerm_subnet_network_security_group_association" "privatelink-snat" 
   subnet_id                 = azurerm_subnet.privatelink-snat.id
   network_security_group_id = azurerm_network_security_group.this.id
 }
+
+resource "azurerm_subnet_network_security_group_association" "private-endpoints" {
+  subnet_id                 = azurerm_subnet.private-endpoints.id
+  network_security_group_id = azurerm_network_security_group.this.id
+}
+
+resource "azurerm_subnet_network_security_group_association" "bastion" {
+  subnet_id                 = azurerm_subnet.bastion.id
+  network_security_group_id = azurerm_network_security_group.this.id
+}
