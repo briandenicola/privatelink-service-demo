@@ -67,7 +67,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods            = 40
 
     upgrade_settings {
-      max_surge         = "33%"
+      max_surge = "33%"
     }
   }
 
@@ -78,7 +78,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_plugin_mode = "Overlay"
     load_balancer_sku   = "standard"
     pod_cidr            = "192.168.0.0/16"
-    outbound_type      = "userDefinedRouting"
+    outbound_type       = "userDefinedRouting"
   }
 
   oms_agent {
@@ -95,13 +95,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   workload_autoscaler_profile {
-    keda_enabled        = true
+    keda_enabled = true
   }
 
   storage_profile {
     blob_driver_enabled = true
     disk_driver_enabled = true
-    disk_driver_version = "v2"
     file_driver_enabled = true
   }
 
