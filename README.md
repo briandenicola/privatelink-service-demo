@@ -23,6 +23,7 @@ Azure Event Hubs | Kafka equivalent resource in Azure
 Azure Container Registry | Azure Container Registry for containers
 Azure Virtual Network  | Azure Virtual Network for all resources and private endpoints
 Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
+
 # Architecture Diagram
 ![overview](./assets/environment.png)
 
@@ -47,7 +48,30 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
     task down
 ```
 
-## Run Commands
+# Application Deployment
+## CI/CD Overview
+![overview](./assets/cicd.png)
+
+### Lifecycle
+1. Developer checkouts out branch in code repository using Github Codespaces.
+1. Developer updates code and develops againist a dedicated mini-cluster either in the Codespace or against AKS in Azure
+    * This [repository](https://github.com/briandenicola/codespaces-developer-demo) shows an example of this
+1. Developer checks in Code
+1. Azure Container Registry has a Build Task configured to monitor for code changes
+1. Azure Container Registry builds the application container
+1. Developer Updates Helm chart with new container version
+1. Flux on the Sandbox AKS cluster monitors for updates for updates to the Helm chart and deploys updated code to the cluster
+
+# Application Troubleshooting 
+##  Azure Monitor
+* Diagnostic Logging for each Azure resource will be sent to the Sandbox's Log Analtyics resource 
+* AKS Cluster Insights is configured to ship node and pod utilization as well as container stdout/stderr to the Sandbox Log Analtyics resource
+* Application should include AppInsights SDK or Otel SDK to send application logs to the Sandbox's AppInsights resource
+* The environment can be updated to incldue Azure Manage Grafana and Azure Managed Prometheus 
+
+## AKS Run Invoke Command
+* The Azure Cli AKS subcommand has the ability to run commands on a private AKS cluster without having direct connectivity.  
+* This can be used for one-off commands including viewing logs
 ```bash
     task run -- "kubectl get nodes" 
     task: [run] az aks command invoke -g monkey-14304_rg -n monkey-14304-aks --command 'kubectl get nodes'
@@ -70,12 +94,8 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
     reviews-v2-58778c5cb-4h8jp        2/2     Running   0          106m
     reviews-v3-85f56ccb56-2dtd9       2/2     Running   0          106m
 ```
-
-# Application Deployment
-1. Create directory under ./cluster-config
-1. Copy deployment YAML files under newly created directory
-1. Update kustomization.yaml with newly created directory
-1. Commit back to git repository
-
-# Bastion Connectivity
-* _TBD_
+## Temporary Windows Machine
+* At times, VM resources maybe required to do deep dive troubleshooting.  
+* This can be accessed through Azure Bastion
+* A pre-built Windows 11 VM with any required tooling and Subsystem for Linux installed
+    * This [repository](https://github.com/briandenicola/tooling) contains all Windows and Linux tools that I use
