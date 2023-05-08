@@ -51,7 +51,7 @@ resource "azurerm_private_dns_zone" "privatelink_vaultcore_azure_net" {
   resource_group_name = azurerm_resource_group.this.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_servicebus_windows_net" {
+resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_vaultcore_windows_net" {
   name                  = "${azurerm_virtual_network.this.name}-keyvault-link"
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_vaultcore_azure_net.name
   resource_group_name   = azurerm_resource_group.this.name
