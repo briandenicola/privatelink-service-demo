@@ -93,7 +93,25 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
     reviews-v1-98c4d66d-m68kl         2/2     Running   0          106m
     reviews-v2-58778c5cb-4h8jp        2/2     Running   0          106m
     reviews-v3-85f56ccb56-2dtd9       2/2     Running   0          106m
+
+    task run -- "kubectl logs todoapi-84664fcfc8-qnxpg"
+    task: [run] az aks command invoke -g monkey-14304_rg -n monkey-14304-aks --command "kubectl logs todoapi-84664fcfc8-qnxpg"
+    command started at 2023-05-08 17:28:15+00:00, finished at 2023-05-08 17:28:16+00:00 with exitcode=0
+    info: todoapi[0]
+        Application is ready to run.
+    warn: Microsoft.AspNetCore.Server.Kestrel[0]
+        Overriding address(es) 'http://+:80'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+    info: Microsoft.Hosting.Lifetime[14]
+        Now listening on: https://0.0.0.0:8443
+    info: Microsoft.Hosting.Lifetime[0]
+        Application started. Press Ctrl+C to shut down.
+    info: Microsoft.Hosting.Lifetime[0]
+        Hosting environment: Production
+    info: Microsoft.Hosting.Lifetime[0]
+        Content root path: /app/
+    info: Todos.TodoController[0]
 ```
+
 ## Temporary Windows Machine
 * At times, VM resources maybe required to do deep dive troubleshooting.  
 * This can be accessed through Azure Bastion
