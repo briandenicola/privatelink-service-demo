@@ -24,6 +24,11 @@ resource "azurerm_subnet_network_security_group_association" "private-endpoints"
   network_security_group_id = azurerm_network_security_group.this.id
 }
 
+resource "azurerm_subnet_network_security_group_association" "compute" {
+  subnet_id                 = azurerm_subnet.compute.id
+  network_security_group_id = azurerm_network_security_group.this.id
+}
+
 
 #https://github.com/libre-devops/terraform-azurerm-bastion/blob/main/nsg.tf
 resource "azurerm_network_security_group" "bastion" {

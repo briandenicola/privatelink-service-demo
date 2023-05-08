@@ -60,3 +60,9 @@ resource "azurerm_subnet" "bastion" {
   address_prefixes     = [ local.bastion_subnet_cidir ]
 }
 
+resource "azurerm_subnet" "compute" {
+  name                 = "compute"
+  resource_group_name  = azurerm_resource_group.this.name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = [ local.compute_subnet_cidir ]
+}
