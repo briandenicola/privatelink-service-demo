@@ -3,6 +3,10 @@ data "azurerm_kubernetes_service_versions" "current" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
+  depends_on = [ 
+    azurerm_subnet_route_table_association.api,
+    azurerm_subnet_route_table_association.nodes,
+  ]
   lifecycle {
     ignore_changes = [
       default_node_pool.0.node_count,
