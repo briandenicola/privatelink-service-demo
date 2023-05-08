@@ -60,33 +60,3 @@ resource "azurerm_subnet" "bastion" {
   address_prefixes     = [ local.bastion_subnet_cidir ]
 }
 
-resource "azurerm_network_security_group" "this" {
-  name                = "${local.resource_name}-nsg"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
-}
-
-resource "azurerm_subnet_network_security_group_association" "nodes" {
-  subnet_id                 = azurerm_subnet.nodes.id
-  network_security_group_id = azurerm_network_security_group.this.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "api" {
-  subnet_id                 = azurerm_subnet.api.id
-  network_security_group_id = azurerm_network_security_group.this.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "privatelink-snat" {
-  subnet_id                 = azurerm_subnet.privatelink-snat.id
-  network_security_group_id = azurerm_network_security_group.this.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "private-endpoints" {
-  subnet_id                 = azurerm_subnet.private-endpoints.id
-  network_security_group_id = azurerm_network_security_group.this.id
-}
-
-resource "azurerm_subnet_network_security_group_association" "bastion" {
-  subnet_id                 = azurerm_subnet.bastion.id
-  network_security_group_id = azurerm_network_security_group.this.id
-}
