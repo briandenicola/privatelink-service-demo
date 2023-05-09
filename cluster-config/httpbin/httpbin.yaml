@@ -11,7 +11,6 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  type: oci
   url: oci://gelding36358acr/helm
   passCredentials: true
   secretRef:
