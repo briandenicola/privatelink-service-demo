@@ -115,5 +115,10 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
 ## Temporary Windows Machine
 * At times, VM resources maybe required to do deep dive troubleshooting.  
 * This can be accessed through Azure Bastion
-* A pre-built Windows 11 VM with any required tooling and Subsystem for Linux installed
+* Native tooling can be used with Azure Bastion Standard SKU
+    * `az network bastion tunnel` creates a secure tunnel to your VM through Bastion
+    * Example: `az network bastion tunnel --name gelding-36358-bastion --resource-group gelding-36358_rg --target-resource-id /subscriptions/17e5343-e92b-4c08-bf19-eb8be6c96991/resourceGroups/gelding-36358_rg/providers/Microsoft.Compute/virtualMachines/gelding-36358-vm --resource-port 22 --port 2222`
+    * You then can ssh into the VM with: `ssh admin@127.0.0.1 -p 2222`
+* A pre-built Windows 11 VM with all required tooling and Subsystem for Linux installed
     * This [repository](https://github.com/briandenicola/tooling) contains all Windows and Linux tools that I use
+    * Shared Image Gallery with Packer is a great way to build the image template to be used. Another example [repository](https://github.com/briandenicola/azure-windows-template-with-packer/tree/main/scripts)
