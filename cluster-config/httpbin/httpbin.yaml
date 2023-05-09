@@ -4,13 +4,14 @@ kind: Namespace
 metadata:
   name: apps
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: httpbin
   namespace: flux-system
 spec:
   interval: 1m0s
+  type: oci
   url: oci://gelding36358acr/helm
   passCredentials: true
   secretRef:
