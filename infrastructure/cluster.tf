@@ -75,6 +75,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  service_mesh_profile {
+    mode = "Istio"
+  }
+
   network_profile {
     dns_service_ip      = "100.${random_integer.services_cidr.id}.0.10"
     service_cidr        = "100.${random_integer.services_cidr.id}.0.0/16"
