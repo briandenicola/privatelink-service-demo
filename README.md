@@ -2,18 +2,7 @@
 
 This repository is a demonstration of how to build a locked sandbox environment in Azure leveraging Private Link Scope. It is currently a work in progress
 
-## Required Existing Resources and Configuration
-Component | Usage
---------------- | --------------- 
-| Two Azure Subscriptions | Application Subscription and Core Subscription |
-| Identity granted Owner permissions over each subscription |
-| Azure Virtual Network (Core) | A subnet for Private Endpoints |
-| Azure VPN Gateway | |
-| Azure Firewall Policy | [Required Rules](https://github.com/briandenicola/kubernetes-cluster-setup/blob/main/infrastructure/prereqs/azuredeploy.template.json)
-| Private DNS Zones (attached to Core Vnet) | privatelink.azurecr.io |
-
-
-## Components
+## Deployed Components for Developers
 Component | Usage
 ------ | ------
 Azure Kubernetes Service | Container Orchestration Runtime Platform  
@@ -31,13 +20,7 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
 ## Build Environment
 ```bash
     vi ./infrastructure/azure.tfvars
-    #firewall_policy_name                         = "bjdproxy-southcentral-policy"
-    #firewall_policy_rg_name                      = "Core_Firewall_RG"
     #core_subscription                            = "43a071dd-5b86-475f-960b-59f814e4f070"
-    #core_private_endpoint_virutalnetwork_rg_name = "Core_Network_RG"
-    #core_private_endpoint_virutalnetwork_name    = "BJD-Core-VNet-001"
-    #core_dns_rg_name                             = "Core_DNS_RG"
-    #core_private_endpoint_rg_name                = "Core_PrivateEndpoints_RG"
 
     az login --scope https://graph.microsoft.com/.default #Code requires AAD permissions 
     task up

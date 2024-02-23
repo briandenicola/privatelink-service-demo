@@ -1,9 +1,9 @@
 data "azurerm_lb" "aks_ingress_lb" {
     depends_on = [ 
-        azapi_resource.flux_config
-     ]
+      azurerm_kubernetes_flux_configuration.flux_config
+    ]
     name                = "kubernetes-internal"
-    resource_group_name = "${local.resource_name}_k8s_nodes_rg"
+    resource_group_name = local.aks_node_rg_name
 }
 
 resource "azurerm_private_link_service" "this" {
@@ -23,17 +23,17 @@ resource "azurerm_private_link_service" "this" {
   }
 }
  
-resource "azurerm_private_endpoint" "aks_ingress_core" {
-  name                = "${local.aks_name}-ingress-core-endpoint"
-  resource_group_name = var.core_private_endpoint_rg_name
-  location            = azurerm_resource_group.this.location
-  subnet_id           = data.azurerm_subnet.core_private-endpoints.id
-  provider            = azurerm.core
+# resource "azurerm_private_endpoint" "aks_ingress_core" {
+#   name                = "${local.aks_name}-ingress-core-endpoint"
+#   resource_group_name = var.core_private_endpoint_rg_name
+#   location            = azurerm_resource_group.this.location
+#   subnet_id           = data.azurerm_subnet.core_private-endpoints.id
+#   provider            = azurerm.core
   
-  private_service_connection {
-    name                           ="${local.aks_name}-ingress-core-endpoint"
-    private_connection_resource_id = azurerm_private_link_service.this.id
-    is_manual_connection           = false
-  }
+#   private_service_connection {
+#     name                           ="${local.aks_name}-ingress-core-endpoint"
+#     private_connection_resource_id = azurerm_private_link_service.this.id
+#     is_manual_connection           = false
+#   }
 
-}
+# }

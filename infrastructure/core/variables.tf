@@ -3,6 +3,14 @@ variable "region" {
   default     = "southcentralus"
 }
 
+variable "app_name" {
+  description = "The root name for this application deployment"
+}
+
 variable "core_subscription" {
   description = "Core Subscription"
+}
+
+variable tags {
+  description = "Tags to be applied to all resources"
 }
