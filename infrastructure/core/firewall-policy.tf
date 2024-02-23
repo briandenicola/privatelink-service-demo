@@ -160,6 +160,21 @@ resource azurerm_firewall_policy_rule_collection_group this {
     }
 
     rule {
+        name              = "Knative (Google Cloud)"
+        source_addresses  = ["*"]
+      
+        protocols {
+            port            = "443"
+            type            = "Https"
+        }
+
+        destination_fqdns = [
+          "gcr.io",
+          "storage.googleapis.com"
+        ]
+    }
+                                
+    rule {
         name              = "Azure Container Registry"
         source_addresses  = ["*"]
       
@@ -169,9 +184,9 @@ resource azurerm_firewall_policy_rule_collection_group this {
         }
 
         destination_fqdns = [
-            "${local.acr_account_name}.azurecr.io",
-            "${local.acr_account_name}.${azurerm_resource_group.this.location}.data.azurecr.io",
-            "*.blob.core.windows.net"
+          "${local.acr_account_name}.azurecr.io",
+          "${local.acr_account_name}.${azurerm_resource_group.this.location}.data.azurecr.io",
+          "*.blob.core.windows.net"
         ]
     }
   }
