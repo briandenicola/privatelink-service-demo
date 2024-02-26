@@ -2,11 +2,11 @@ resource "azurerm_firewall_policy" "this" {
   name                = "${local.firewall_name}-policies"
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
-  sku                 = "Basic"
+  sku                 = "Standard"
   provider            = azurerm.core
-  # dns {
-  #   proxy_enabled     = true
-  # }
+  dns {
+    proxy_enabled     = true
+  }
 }
 
 resource azurerm_firewall_policy_rule_collection_group this {
@@ -191,30 +191,30 @@ resource azurerm_firewall_policy_rule_collection_group this {
     }
   }
 
-  # network_rule_collection {
-  #   name                    = "network_rule_collection"
-  #   priority                = 400
-  #   action                  = "Allow"
+  network_rule_collection {
+    name                    = "network_rule_collection"
+    priority                = 400
+    action                  = "Allow"
 
-  #   rule {
-  #     name                  = "monitor"
-  #     source_addresses      = ["*"]
-  #     destination_ports     = ["443"]
-  #     protocols             = ["TCP"]
-  #     destination_addresses = [
-  #       "AzureMonitor"
-  #     ]
-  #   }
+    rule {
+      name                  = "monitor"
+      source_addresses      = ["*"]
+      destination_ports     = ["443"]
+      protocols             = ["TCP"]
+      destination_addresses = [
+        "AzureMonitor"
+      ]
+    }
 
-  #   rule {
-  #     name                  = "keyvault"
-  #     source_addresses      = ["*"]
-  #     destination_ports     = ["443"]
-  #     protocols             = ["TCP"]
-  #     destination_addresses = [
-  #       "AzureKeyVault",
-  #       "AzureActiveDirectory"
-  #     ]
-  #   }
-  # }
+    rule {
+      name                  = "keyvault"
+      source_addresses      = ["*"]
+      destination_ports     = ["443"]
+      protocols             = ["TCP"]
+      destination_addresses = [
+        "AzureKeyVault",
+        "AzureActiveDirectory"
+      ]
+    }
+  }
 }

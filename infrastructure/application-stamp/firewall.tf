@@ -11,19 +11,13 @@ resource azurerm_firewall this {
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
   firewall_policy_id  = var.firewall_policy_id
-  sku_tier            = "Basic"
+  sku_tier            = "Standard"
   sku_name            = "AZFW_VNet"
-
-  management_ip_configuration {
-    name = "management"
-    subnet_id = azurerm_subnet.AzureFirewallManagement.id
-    public_ip_address_id = azurerm_public_ip.this.id
-  }
 
   ip_configuration {
     name                 = "standard"
     subnet_id            = azurerm_subnet.AzureFirewall.id
-
+    public_ip_address_id = azurerm_public_ip.this.id
   }
 }
 

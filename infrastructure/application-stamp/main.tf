@@ -40,7 +40,6 @@ locals {
   nodes_subnet_cidir      = cidrsubnet(local.vnet_cidr, 8, 3)
   compute_subnet_cidir    = cidrsubnet(local.vnet_cidr, 8, 4)
   pls_subnet_cidir        = cidrsubnet(local.vnet_cidr, 8, 10)
-  fw_mgmt_subnet_cidr     = cidrsubnet(local.vnet_cidr, 8, 249)
   bastion_subnet_cidir    = cidrsubnet(local.vnet_cidr, 8, 250)
 }
 
