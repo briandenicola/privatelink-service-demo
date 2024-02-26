@@ -30,6 +30,13 @@ resource "azurerm_subnet" "AzureFirewall" {
   address_prefixes      = [ local.fw_subnet_cidr ]
 }
 
+resource "azurerm_subnet" "AzureFirewallManagement" {
+  name                  = "AzureFirewallManagementSubnet"
+  resource_group_name   = azurerm_resource_group.this.name
+  virtual_network_name  = azurerm_virtual_network.this.name
+  address_prefixes      = [ local.fw_mgmt_subnet_cidr ]
+}
+
 resource "azurerm_subnet" "nodes" {
   name                 = "nodes"
   resource_group_name  = azurerm_resource_group.this.name
