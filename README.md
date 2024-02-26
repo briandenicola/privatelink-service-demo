@@ -20,7 +20,13 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
 ## Build Environment
 ```bash
     vi ./infrastructure/azure.tfvars
-    #core_subscription                            = "43a071dd-5b86-475f-960b-59f814e4f070"
+    #core_subscription = "43a071dd-5b86-475f-960b-59f814e4f070"
+    #dev_subscription  = "1fc91beb-c262-400a-a4e0-b5eec229e46e"
+    #deploy_bastion    = false
+    #deploy_cosmos_db  = true
+    #deploy_event_hub  = false
+    #node_count        = 3
+    #node_sku          = "Standard_D4s_v5"
 
     az login --scope https://graph.microsoft.com/.default #Code requires AAD permissions 
     task up
