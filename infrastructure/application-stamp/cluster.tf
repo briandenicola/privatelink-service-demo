@@ -1,5 +1,5 @@
 locals {
-  kubernetes_version = data.azurerm_kubernetes_service_versions.current.latest_version
+  kubernetes_version = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions) - 1]
 }
 
 resource "azurerm_kubernetes_cluster" "this" {
