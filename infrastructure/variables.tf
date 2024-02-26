@@ -21,5 +21,14 @@ variable "deploy_event_hub" {
 
 variable "deploy_cosmos_db" {
   description = "Deploy a Cosmos DB instance"
+}
 
+variable "node_count" {
+  description = "The value for the VM SKU"
+  default     = 1
+}
+
+variable "node_sku" {
+  description = "The value for the VM SKU"
+  default     = "Standard_D4ads_v5"
 }

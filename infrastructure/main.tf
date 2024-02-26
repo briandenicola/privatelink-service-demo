@@ -39,5 +39,6 @@ module "application-stamp" {
   deploy_bastion       = var.deploy_bastion
   deploy_cosmos_db     = var.deploy_cosmos_db
   deploy_event_hub     = var.deploy_event_hub
-
+  node_count           = var.node_count
+  node_sku             = var.node_sku
 }
