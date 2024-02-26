@@ -14,11 +14,17 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false
     }
   }
+
+  subscription_id = var.dev_subscription
 }
 
 provider "azurerm" {
-  alias           = "core"
-  features        {}
+  alias = "core"
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 
   subscription_id = var.core_subscription
 }

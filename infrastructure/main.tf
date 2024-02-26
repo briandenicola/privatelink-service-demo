@@ -18,22 +18,26 @@ locals {
 }
 
 module "core" {
-  source            = "./core"
-  region            = var.region
-  app_name          = local.resource_name
-  core_subscription = var.core_subscription
-  tags              = local.tags
+  source               = "./core"
+  region               = var.region
+  app_name             = local.resource_name
+  core_subscription_id = var.core_subscription
+  tags                 = local.tags
 }
 
 module "application-stamp" {
   depends_on = [
     module.core
   ]
-  source             = "./application-stamp"
-  region             = var.region
-  app_name           = local.resource_name
-  core_subscription  = var.core_subscription
-  tags               = local.tags
-  firewall_policy_id = module.core.CORE_FW_POLICY_ID
+  source               = "./application-stamp"
+  region               = var.region
+  app_name             = local.resource_name
+  core_subscription_id = var.core_subscription
+  dev_subscription_id  = var.dev_subscription
+  tags                 = local.tags
+  firewall_policy_id   = module.core.CORE_FW_POLICY_ID
+  deploy_bastion       = var.deploy_bastion
+  deploy_cosmos_db     = var.deploy_cosmos_db
+  deploy_event_hub     = var.deploy_event_hub
 
 }

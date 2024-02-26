@@ -2,7 +2,7 @@ resource "azurerm_firewall_policy" "this" {
   name                = "${local.firewall_name}-policies"
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
-  sku                 = "Standard"
+  sku                 = "Basic"
   provider            = azurerm.core
   dns {
     proxy_enabled     = true

@@ -12,5 +12,5 @@ provider "azurerm" {
   alias           = "core"
   features        {}
 
-  subscription_id = var.core_subscription
+  subscription_id = var.core_subscription_id
 }

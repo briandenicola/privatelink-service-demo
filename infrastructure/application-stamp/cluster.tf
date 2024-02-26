@@ -63,17 +63,14 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   default_node_pool {
     name                = "default"
-    node_count          = 3
-    vm_size             = var.vm_sku
-    os_disk_size_gb     = 90
+    node_count          = var.node_count
+    vm_size             = var.node_sku
+    os_disk_size_gb     = 127
     vnet_subnet_id      = azurerm_subnet.nodes.id
     os_sku              = "Mariner"
-    os_disk_type        = "Ephemeral"
     type                = "VirtualMachineScaleSets"
-    enable_auto_scaling = true
-    min_count           = 3
-    max_count           = 9
-    max_pods            = 40
+    enable_auto_scaling = false
+    max_pods            = 110
 
     upgrade_settings {
       max_surge = "33%"
