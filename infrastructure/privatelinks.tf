@@ -27,6 +27,7 @@ resource "azurerm_private_endpoint" "acr_account_core" {
   resource_group_name = local.core_rg_name
   location            = var.region
   subnet_id           = module.core.CORE_VNET_PE_SUBNET_ID
+  provider            = azurerm.core
   
   private_service_connection {
     name                           = "${local.acr_account_name}-core-endpoint"
