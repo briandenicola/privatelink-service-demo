@@ -30,9 +30,11 @@ tasks:
   creds:
     desc: Grab AKS credentials 
     cmds:
-    - az aks get-credentials -g {{.RG}} -n {{.AKS}} --overwrite-existing
+    - az aks get-credentials --subscription {{.APP_SUBSCRIPTION_ID}} -g {{.RG}} -n {{.AKS}} --overwrite-existing
     - kubelogin convert-kubeconfig -l azurecli
     vars:
+      APP_SUBSCRIPTION_ID:
+        sh: terraform -chdir=./infrastructure output -raw APP_SUBSCRIPTION_ID
       RG: 
         sh: terraform -chdir=./infrastructure output -raw AKS_RESOURCE_GROUP
       AKS: 
@@ -41,8 +43,10 @@ tasks:
   run:
     desc: Run commands on AKS cluster 
     cmds:
-    - az aks command invoke -g {{.RG}} -n {{.AKS}} --command {{.CMD}}
+    - az aks command invoke --subscription {{.APP_SUBSCRIPTION_ID}} -g {{.RG}} -n {{.AKS}} --command {{.CMD}}
     vars:
+      APP_SUBSCRIPTION_ID:
+        sh: terraform -chdir=./infrastructure output -raw APP_SUBSCRIPTION_ID
       RG: 
         sh: terraform -chdir=./infrastructure output -raw AKS_RESOURCE_GROUP
       AKS: 
