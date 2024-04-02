@@ -8,6 +8,7 @@ azure.tfvars
 .terraform*
 terraform.tfstate
 terraform.tfstate.backup
+terraform.tfstate.d/
 
 # User-specific files
 *.rsuser
