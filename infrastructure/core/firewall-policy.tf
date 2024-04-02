@@ -48,11 +48,14 @@ resource azurerm_firewall_policy_rule_collection_group this {
 
         destination_fqdns = [    
           "azure.github.io",
-          "*.dp.kubernetesconfiguration.azure.com",
+          "${local.location}.dp.kubernetesconfiguration.azure.com",
           "arcmktplaceprod.azurecr.io",
           "*.ingestion.msftcloudes.com",
           "*.microsoftmetrics.com",
           "marketplaceapi.microsoft.com",
+          "arcmktplaceprod.westus2.data.azurecr.io",
+          "arcmktplaceprod.westeurope.data.azurecr.io",
+          "arcmktplaceprod.eastus.data.azurecr.io",
           "azure.github.io"
         ]
     }     
@@ -136,7 +139,8 @@ resource azurerm_firewall_policy_rule_collection_group this {
 
         destination_fqdns = [
           "dc.services.visualstudio.com",
-          "*.monitor.azure.com",
+          "${local.location}.handler.control.monitor.azure.com",
+          "*.ingest.monitor.azure.com",
           "*.monitoring.azure.com",
           "*.ods.opinsights.azure.com",
           "*.oms.opinsights.azure.com"
@@ -213,7 +217,17 @@ resource azurerm_firewall_policy_rule_collection_group this {
       protocols             = ["TCP"]
       destination_addresses = [
         "AzureKeyVault",
-        "AzureActiveDirectory"
+        "AzureActiveDirectory",
+      ]
+    }
+
+    rule {
+      name                  = "managed_disks"
+      source_addresses      = ["*"]
+      destination_ports     = ["443"]
+      protocols             = ["TCP"]
+      destination_addresses = [
+        "AzureStorage"
       ]
     }
   }
