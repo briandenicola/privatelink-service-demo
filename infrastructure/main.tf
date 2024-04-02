@@ -10,10 +10,8 @@ resource "random_pet" "this" {
 
 locals {
   resource_name    = "${random_pet.this.id}-${random_id.this.dec}"
-  aks_name         = "${local.resource_name}-aks"
   core_rg_name     = "${local.resource_name}_core_rg"
   app_rg_name      = "${local.resource_name}_app_rg"
-  acr_account_name = "${random_pet.this.id}${random_id.this.dec}acr"
   tags             = "Azure Private Link for Developers Demo"
 }
 

@@ -3,10 +3,6 @@ locals {
 }
 
 resource "azurerm_kubernetes_cluster" "this" {
-  depends_on = [ 
-    azurerm_subnet_route_table_association.api,
-    azurerm_subnet_route_table_association.nodes,
-  ]
   lifecycle {
     ignore_changes = [
       default_node_pool.0.node_count,
@@ -14,9 +10,9 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   name                                = local.aks_name
-  resource_group_name                 = azurerm_resource_group.this.name
-  location                            = azurerm_resource_group.this.location
-  node_resource_group                 = "${local.resource_name}_k8s_nodes_rg"
+  resource_group_name                 = data.azurerm_resource_group.this.name
+  location                            = data.azurerm_resource_group.this.location
+  node_resource_group                 = local.aks_node_rg_name
   private_cluster_enabled             = true
   dns_prefix_private_cluster          = local.aks_name
   private_dns_zone_id                 = azurerm_private_dns_zone.aks_private_zone.id
@@ -36,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   api_server_access_profile {
     vnet_integration_enabled = true
-    subnet_id                = azurerm_subnet.api.id
+    subnet_id                = var.aks_mgmt_subnet_id
   }
 
   azure_active_directory_role_based_access_control {
@@ -66,7 +62,7 @@ resource "azurerm_kubernetes_cluster" "this" {
     node_count          = var.node_count
     vm_size             = var.node_sku
     os_disk_size_gb     = 127
-    vnet_subnet_id      = azurerm_subnet.nodes.id
+    vnet_subnet_id      = var.aks_subnet_id
     os_sku              = "Mariner"
     type                = "VirtualMachineScaleSets"
     enable_auto_scaling = false
@@ -106,11 +102,11 @@ resource "azurerm_kubernetes_cluster" "this" {
   }
 
   oms_agent {
-    log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
+    log_analytics_workspace_id = var.log_analytics_workspace_id
   }
 
   microsoft_defender {
-    log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
+    log_analytics_workspace_id = var.log_analytics_workspace_id
   }
 
   key_vault_secrets_provider {
@@ -122,4 +118,42 @@ resource "azurerm_kubernetes_cluster" "this" {
     keda_enabled = true
   }
 
+}
+
+resource "azurerm_monitor_diagnostic_setting" "aks" {
+  name                       = "diag"
+  target_resource_id         = azurerm_kubernetes_cluster.this.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+
+  enabled_log  {
+    category = "kube-apiserver"
+  }
+
+  enabled_log  {
+    category = "kube-audit"
+  }
+
+  enabled_log  {
+    category = "kube-audit-admin"
+  }
+
+  enabled_log  {
+    category = "kube-controller-manager"
+  }
+
+  enabled_log  {
+    category = "kube-scheduler"
+  }
+
+  enabled_log  {
+    category = "cluster-autoscaler"
+  }
+
+  enabled_log  {
+    category = "guard"
+  }
+
+  metric {
+    category = "AllMetrics"
+  }
 }

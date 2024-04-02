@@ -1,3 +1,8 @@
+locals {
+  aks_name         = module.application-stamp.AKS_CLUSTER_NAME
+  acr_account_name = module.application-stamp.ACR_NAME
+}
+
 resource "azurerm_private_endpoint" "aks_ingress_core" {
   depends_on = [
     module.core,

@@ -17,3 +17,8 @@ output "ACR_ID" {
   value     = azurerm_container_registry.this.id
   sensitive = false
 }
+
+output "ACR_NAME" {
+  value     = azurerm_container_registry.this.name
+  sensitive = false
+}
