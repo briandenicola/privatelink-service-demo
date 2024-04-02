@@ -9,6 +9,10 @@ resource "azurerm_eventhub_namespace" "this" {
 }
 
 resource "azurerm_eventhub" "this" {
+  depends_on = [ 
+    azurerm_eventhub_namespace.this
+  ]
+  
   name                = "events"
   namespace_name      = azurerm_eventhub_namespace.this.name
   resource_group_name = data.azurerm_resource_group.this.name
