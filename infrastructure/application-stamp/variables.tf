@@ -47,3 +47,13 @@ variable "deploy_cosmos_db" {
   description = "Deploy a Cosmos DB instance"
   default     = false
 }
+
+variable "deploy_flux" {
+  description = "Deploy Flux Extension"
+  default     = false
+}
+
+variable "flux_repository" {
+  description = "The repository for the Flux extension GitOps configuration"
+  default     = "https://github.com/samples/flux-get-started"
+}

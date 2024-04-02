@@ -23,6 +23,15 @@ variable "deploy_cosmos_db" {
   description = "Deploy a Cosmos DB instance"
 }
 
+variable "deploy_flux_extension" {
+  description = "Deploy Flux Extension"
+}
+
+variable "flux_repository" {
+  description = "The repository for the Flux extension GitOps configuration"
+  default     = ""
+}
+
 variable "node_count" {
   description = "The value for the VM SKU"
   default     = 1

@@ -12,6 +12,4 @@ locals {
   aks_name         = var.aks_name
   aks_node_rg_name = "${local.aks_name}_nodes_rg"
   location         = data.azurerm_resource_group.this.location
-  app_path         = "./cluster-config"
-  flux_repository  = "https://github.com/briandenicola/privatelink-service-demo"
 }

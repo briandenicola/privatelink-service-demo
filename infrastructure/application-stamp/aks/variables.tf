@@ -43,3 +43,18 @@ variable "node_count" {
     error_message = "Valid values for var: test_variable are (1, 3, 6)."
   } 
 }
+
+variable "deploy_flux" {
+  description = "Deploy Flux Extension"
+  default     = false
+}
+
+variable "flux_repository" {
+  description = "The repository for the Flux extension GitOps configuration"
+  default     = "https://github.com/samples/flux-get-started"
+}
+
+variable "app_path" {
+  description = "The app path within the Git repository for the Flux extension"
+  default     = "./cluster-config"
+}

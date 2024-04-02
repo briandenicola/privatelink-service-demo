@@ -13,6 +13,8 @@ module "aks" {
   log_analytics_workspace_id  = azurerm_log_analytics_workspace.this.id
   node_sku                    = var.node_sku
   node_count                  = var.node_count
+  deploy_flux                 = var.deploy_flux
+  #flux_repository             = var.flux_repository
 }
 
 module "bastion" {
