@@ -14,7 +14,7 @@ Azure Virtual Network  | Azure Virtual Network for all resources and private end
 Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
 
 # Architecture Diagram
-![overview](./assets/environment.png)
+![overview](./.assets/privatelink-service-demo.png)
 
 # Infrastructure Deployment 
 ## Build Environment
@@ -39,7 +39,7 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
 
 # Application Deployment
 ## CI/CD Overview
-![overview](./assets/cicd.png)
+![overview](./.assets/cicd.png)
 
 ### Lifecycle
 1. Developer checkouts out branch in code repository using Github Codespaces.
