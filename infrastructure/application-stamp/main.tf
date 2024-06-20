@@ -18,6 +18,7 @@ locals {
   eventhub_namespace_name = "${local.resource_name}-eventhub-namespace"
   bastion_name            = "${local.resource_name}-bastion"
   kv_name                 = "${local.resource_name}-kv"
+  vm_name                 = "${local.resource_name}-vm"
   acr_account_name        = "${replace(local.resource_name, "-", "")}acr"
 
   vnet_cidr               = cidrsubnet("10.0.0.0/8", 8, random_integer.vnet_cidr.result)
@@ -27,7 +28,6 @@ locals {
   nodes_subnet_cidir      = cidrsubnet(local.vnet_cidr, 8, 3)
   compute_subnet_cidir    = cidrsubnet(local.vnet_cidr, 8, 4)
   pls_subnet_cidir        = cidrsubnet(local.vnet_cidr, 8, 10)
-  bastion_subnet_cidir    = cidrsubnet(local.vnet_cidr, 8, 250)
 }
 
 resource "azurerm_resource_group" "this" {

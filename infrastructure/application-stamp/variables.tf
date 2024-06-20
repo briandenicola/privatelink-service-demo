@@ -53,6 +53,11 @@ variable "deploy_flux" {
   default     = false
 }
 
+variable "deploy_jumpbox" {
+  description = "Deploy Jumpbox"
+  default     = false
+}
+
 variable "flux_repository" {
   description = "The repository for the Flux extension GitOps configuration"
   default     = "https://github.com/samples/flux-get-started"

@@ -4,8 +4,8 @@ resource "azurerm_cosmosdb_account" "this" {
   location                  = data.azurerm_resource_group.this.location
   offer_type                = "Standard"
   kind                      = "GlobalDocumentDB"
-  enable_free_tier          = true
-  enable_automatic_failover = false
+  free_tier_enabled         = true
+  automatic_failover_enabled = true
 
   consistency_policy {
     consistency_level = "Session"
