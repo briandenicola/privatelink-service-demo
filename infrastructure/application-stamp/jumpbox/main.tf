@@ -21,7 +21,7 @@ resource "azurerm_linux_virtual_machine" "this" {
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
   size                = var.vm_sku
-  admin_username      = "manager"
+  admin_username      = var.default_admin_username
   network_interface_ids = [
     azurerm_network_interface.this.id,
   ]
