@@ -23,18 +23,12 @@ resource "azurerm_subnet" "api" {
   }
 }
 
-resource "azurerm_subnet" "AzureFirewall" {
-  name                 = "AzureFirewallSubnet"
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = [local.fw_subnet_cidr]
-}
-
 resource "azurerm_subnet" "nodes" {
-  name                 = "nodes"
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = [local.nodes_subnet_cidir]
+  name                            = "nodes"
+  resource_group_name             = azurerm_resource_group.this.name
+  virtual_network_name            = azurerm_virtual_network.this.name
+  address_prefixes                = [local.nodes_subnet_cidir]
+  default_outbound_access_enabled = false
 }
 
 resource "azurerm_subnet" "privatelink-snat" {
@@ -47,15 +41,17 @@ resource "azurerm_subnet" "privatelink-snat" {
 }
 
 resource "azurerm_subnet" "private-endpoints" {
-  name                 = "private-endpoints"
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = [local.pe_subnet_cidir]
+  name                            = "private-endpoints"
+  resource_group_name             = azurerm_resource_group.this.name
+  virtual_network_name            = azurerm_virtual_network.this.name
+  address_prefixes                = [local.pe_subnet_cidir]
+  default_outbound_access_enabled = false
 }
 
 resource "azurerm_subnet" "compute" {
-  name                 = "compute"
-  resource_group_name  = azurerm_resource_group.this.name
-  virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes     = [local.compute_subnet_cidir]
+  name                            = "compute"
+  resource_group_name             = azurerm_resource_group.this.name
+  virtual_network_name            = azurerm_virtual_network.this.name
+  address_prefixes                = [local.compute_subnet_cidir]
+  default_outbound_access_enabled = false
 }

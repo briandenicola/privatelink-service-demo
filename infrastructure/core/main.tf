@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "this" {
 
   tags = {
     Application = var.tags
-    Components  = "firewall-policies; network-core"
+    Components  = "network-core; private-endpoints"
     DeployedOn  = timestamp()
   }
 }

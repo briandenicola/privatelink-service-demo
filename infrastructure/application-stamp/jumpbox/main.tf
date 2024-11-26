@@ -1,40 +1,40 @@
 resource "azurerm_user_assigned_identity" "this" {
-  name                = "${var.vm_name}-identity"
-  resource_group_name = data.azurerm_resource_group.this.name
-  location            = data.azurerm_resource_group.this.location
+  name                = "${var.vm.name}-identity"
+  resource_group_name = var.vm.resource_group_name
+  location            = var.vm.location
 }
 
 resource "azurerm_network_interface" "this" {
-  name                = "${var.vm_name}-nic"
-  location            = data.azurerm_resource_group.this.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  name                = "${var.vm.name}-nic"
+  resource_group_name = var.vm.resource_group_name
+  location            = var.vm.location
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.vm_subnet_id
+    subnet_id                     = var.vm.vnet.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 resource "azurerm_linux_virtual_machine" "this" {
-  name                = "${var.vm_name}-linux"
-  resource_group_name = data.azurerm_resource_group.this.name
-  location            = data.azurerm_resource_group.this.location
-  size                = var.vm_sku
-  admin_username      = var.default_admin_username
+  name                = "${var.vm.name}-linux"
+  resource_group_name = var.vm.resource_group_name
+  location            = var.vm.location
+  size                = var.vm.sku
+  admin_username      = var.vm.admin.username
   network_interface_ids = [
     azurerm_network_interface.this.id,
   ]
 
   admin_ssh_key {
-    username   = var.default_admin_username
-    public_key = file(var.ssh_key_path)
+    username   = var.vm.admin.username
+    public_key = file(var.vm.admin.ssh_key_path)
   }
 
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    name                 = "${var.vm_name}-osdisk" 
+    name                 = "${var.vm.name}-osdisk" 
   }
 
   identity {

@@ -5,10 +5,18 @@ resource "azurerm_container_registry" "this" {
   sku                      = "Premium"
   admin_enabled            = false
   data_endpoint_enabled    = true 
+  anonymous_pull_enabled   = true
 
   network_rule_set {
     default_action = "Deny"
   }
+}
+
+resource "azurerm_container_registry_cache_rule" "mcr_cache_rule" {
+  name                  = "mrc-cache-rule"
+  container_registry_id = azurerm_container_registry.this.id
+  target_repo           = "*"
+  source_repo           = "mcr.microsoft.com/*"
 }
 
 resource "azurerm_private_endpoint" "acr_account" {

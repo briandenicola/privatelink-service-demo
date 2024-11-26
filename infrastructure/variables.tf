@@ -14,8 +14,8 @@ variable "dev_subscription" {
   description = "Developer Subscription"
 }
 
-variable "deploy_bastion" {
-  description = "Deploy a bastion host"
+variable "deploy_jumpbox" {
+  description = "Deploy a jumpbox + Azure Bastion"
 }
 
 variable "deploy_event_hub" {
@@ -43,4 +43,14 @@ variable "node_count" {
 variable "node_sku" {
   description = "The value for the VM SKU"
   default     = "Standard_D4ads_v5"
+}
+
+variable "istio_version" {
+  description = "The version of the managed Azure Service Mesh to deploy"
+  default     = "asm-1.23"
+}
+
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to deploy"
+  default     = "1.30"
 }
