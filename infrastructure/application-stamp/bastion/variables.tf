@@ -7,5 +7,5 @@ variable "resource_group_name" {
 }
 
 variable "bastion_vnet_id" {
-  description = "The Azure vnet id where the bastion host will be deployed"
+  description = "The Azure Vnet id where the bastion host will connect to"
 }

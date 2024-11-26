@@ -26,6 +26,11 @@ variable "log_analytics_workspace_id" {
   description = "The Azure Log Analytics workspace id"
 }
 
+variable "istio_version" {
+  description = "The version of the managed Azure Service Mesh to deploy"
+  default = "asm-1-23"
+}
+
 variable "node_sku" {
   description = "The value for the VM SKU"
   default     = "Standard_D4ads_v5"

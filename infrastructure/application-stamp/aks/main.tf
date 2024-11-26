@@ -12,4 +12,5 @@ locals {
   aks_name         = var.aks_name
   aks_node_rg_name = "${local.aks_name}_nodes_rg"
   location         = data.azurerm_resource_group.this.location
+  istio_version    = [var.istio_version]
 }

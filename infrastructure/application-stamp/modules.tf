@@ -5,6 +5,7 @@ module "aks" {
   ]
   source                     = "./aks"
   aks_name                   = local.aks_name
+  istio_version              = "asm-1-23"
   resource_group_name        = azurerm_resource_group.this.name
   aks_vnet_id                = azurerm_virtual_network.this.id
   aks_subnet_id              = azurerm_subnet.nodes.id
