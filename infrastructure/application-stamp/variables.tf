@@ -12,15 +12,18 @@ variable tags {
 
 variable "region" {
   description = "Region to deploy in Azure"
-  default     = "southcentralus"
 }
 
 variable "app_name" {
   description = "The root name for this application deployment"
 }
 
-variable "firewall_policy_id" {
-  description = "Azure Resource Id of the firweall policy to be used by the application stamp"
+variable "istio_version" {
+  description = "The version of the managed Azure Service Mesh to deploy"
+}
+
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to deploy"
 }
 
 variable "node_sku" {

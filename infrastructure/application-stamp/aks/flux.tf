@@ -1,11 +1,12 @@
 resource "azurerm_kubernetes_cluster_extension" "flux" {
   depends_on = [
-    azurerm_kubernetes_cluster.this
+    #azurerm_kubernetes_cluster.this
+    azapi_resource.aks
   ]
   
   count          = var.deploy_flux ? 1 : 0
   name           = "flux"
-  cluster_id     = azurerm_kubernetes_cluster.this.id
+  cluster_id     = azapi_resource.aks.id #azurerm_kubernetes_cluster.this.id
   extension_type = "microsoft.flux"
 }
 
@@ -16,7 +17,7 @@ resource "azurerm_kubernetes_flux_configuration" "flux_config" {
 
   count       = var.deploy_flux ? 1 : 0
   name        = "aks-flux-extension"
-  cluster_id  = azurerm_kubernetes_cluster.this.id
+  cluster_id  = azapi_resource.aks.id #azurerm_kubernetes_cluster.this.id
   namespace   = "flux-system"
   scope       = "cluster"
 

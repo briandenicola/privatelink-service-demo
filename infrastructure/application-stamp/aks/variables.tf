@@ -6,16 +6,16 @@ variable "resource_group_name" {
   description = "The name of the resource group where the bastion host will be deployed"
 }
 
+variable "aks_vnet_id" {
+  description = "The Azure virtual id where the AKS cluster will be deployed"
+}
+
 variable "aks_mgmt_subnet_id" {
   description = "The resource id of the subnet where the AKS API server will be deployed"
 }
 
 variable "aks_subnet_id" {
   description = "The Azure subnet id where the AKS cluster will be deployed"
-}
-
-variable "aks_vnet_id" {
-  description = "The Azure virtual id where the AKS cluster will be deployed"
 }
 
 variable "acr_id" {
@@ -28,7 +28,10 @@ variable "log_analytics_workspace_id" {
 
 variable "istio_version" {
   description = "The version of the managed Azure Service Mesh to deploy"
-  default = "asm-1-23"
+}
+
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to deploy"
 }
 
 variable "node_sku" {

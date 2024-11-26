@@ -33,7 +33,6 @@ module "application-stamp" {
   core_subscription_id = var.core_subscription
   dev_subscription_id  = var.dev_subscription
   tags                 = local.tags
-  firewall_policy_id   = module.core.CORE_FW_POLICY_ID
   deploy_bastion       = var.deploy_bastion
   deploy_cosmos_db     = var.deploy_cosmos_db
   deploy_event_hub     = var.deploy_event_hub
@@ -42,4 +41,6 @@ module "application-stamp" {
   flux_repository      = var.flux_repository
   node_count           = var.node_count
   node_sku             = var.node_sku
+  kubernetes_version   = var.kubernetes_version
+  istio_version        = var.istio_version
 }

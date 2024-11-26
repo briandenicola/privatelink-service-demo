@@ -44,3 +44,13 @@ variable "node_sku" {
   description = "The value for the VM SKU"
   default     = "Standard_D4ads_v5"
 }
+
+variable "istio_version" {
+  description = "The version of the managed Azure Service Mesh to deploy"
+  default     = "asm-1.23"
+}
+
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to deploy"
+  default     = "1.30"
+}

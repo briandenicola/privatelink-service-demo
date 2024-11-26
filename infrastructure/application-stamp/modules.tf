@@ -1,11 +1,8 @@
 module "aks" {
-  depends_on = [
-    azurerm_subnet_route_table_association.api,
-    azurerm_subnet_route_table_association.nodes,
-  ]
   source                     = "./aks"
   aks_name                   = local.aks_name
-  istio_version              = "asm-1-23"
+  kubernetes_version         = var.kubernetes_version
+  istio_version              = var.istio_version
   resource_group_name        = azurerm_resource_group.this.name
   aks_vnet_id                = azurerm_virtual_network.this.id
   aks_subnet_id              = azurerm_subnet.nodes.id
@@ -44,9 +41,9 @@ module "eventhub" {
 }
 
 module "jumpbox" {
-  count                = var.deploy_jumpbox ? 1 : 0
-  source               = "./jumpbox"
-  resource_group_name  = azurerm_resource_group.this.name
-  vm_subnet_id         = azurerm_subnet.compute.id
-  vm_name              = local.vm_name
+  count               = var.deploy_jumpbox ? 1 : 0
+  source              = "./jumpbox"
+  resource_group_name = azurerm_resource_group.this.name
+  vm_subnet_id        = azurerm_subnet.compute.id
+  vm_name             = local.vm_name
 }
