@@ -25,7 +25,7 @@ resource "azapi_resource" "aks" {
       kubernetesVersion    = local.kubernetes_version
       dnsPrefix            = local.aks_name
       enableRBAC           = true
-      disableLocalAccounts = false
+      disableLocalAccounts = true 
       nodeResourceGroup    = "${local.aks_name}_nodes_rg"
 
       aadProfile = {
@@ -149,7 +149,7 @@ resource "azapi_resource" "aks" {
         enablePrivateCluster           = true
         privateDNSZone                 = azurerm_private_dns_zone.aks_private_zone.id
         enablePrivateClusterPublicFQDN = false
-        disableRunCommand              = true
+        disableRunCommand              = false
         enableVnetIntegration          = true
         subnetId                       = var.aks_cluster.vnet.mgmt_subnet.id
       }
