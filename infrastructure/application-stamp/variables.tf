@@ -55,7 +55,7 @@ variable "deploy_flux" {
 
 variable "deploy_jumpbox" {
   description = "Deploy Jumpbox"
-  default     = false
+  default     = true
 }
 
 variable "flux_repository" {

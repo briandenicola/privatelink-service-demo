@@ -1,6 +1,9 @@
 variable "region" {
   description = "Region to deploy in Azure"
-  default     = "southcentralus"
+}
+
+variable "tags" {
+  description = "Tags to apply for this resource"
 }
 
 variable "core_subscription" {

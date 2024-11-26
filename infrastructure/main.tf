@@ -9,10 +9,10 @@ resource "random_pet" "this" {
 }
 
 locals {
-  resource_name    = "${random_pet.this.id}-${random_id.this.dec}"
-  core_rg_name     = "${local.resource_name}_core_rg"
-  app_rg_name      = "${local.resource_name}_app_rg"
-  tags             = "Azure Private Link for Developers Demo"
+  resource_name = "${random_pet.this.id}-${random_id.this.dec}"
+  core_rg_name  = "${local.resource_name}_core_rg"
+  app_rg_name   = "${local.resource_name}_app_rg"
+  tags          = var.tags
 }
 
 module "core" {
@@ -38,6 +38,7 @@ module "application-stamp" {
   deploy_cosmos_db     = var.deploy_cosmos_db
   deploy_event_hub     = var.deploy_event_hub
   deploy_flux          = var.deploy_flux_extension
+  deploy_jumpbox       = true
   flux_repository      = var.flux_repository
   node_count           = var.node_count
   node_sku             = var.node_sku

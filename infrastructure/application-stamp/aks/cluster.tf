@@ -18,14 +18,14 @@ resource "azurerm_kubernetes_cluster" "this" {
   private_dns_zone_id                 = azurerm_private_dns_zone.aks_private_zone.id
   private_cluster_public_fqdn_enabled = false
   kubernetes_version                  = local.kubernetes_version
-  sku_tier                            = "Free"
+  sku_tier                            = "Standard"
   oidc_issuer_enabled                 = true
   workload_identity_enabled           = true
   open_service_mesh_enabled           = false
   azure_policy_enabled                = true
   local_account_disabled              = true
   role_based_access_control_enabled   = true
-  run_command_enabled                 = false
+  run_command_enabled                 = true
   cost_analysis_enabled               = true
   automatic_upgrade_channel           = "patch"
   node_os_upgrade_channel             = "NodeImage"

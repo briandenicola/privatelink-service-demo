@@ -15,7 +15,6 @@ module "aks" {
   node_sku                   = var.node_sku
   node_count                 = var.node_count
   deploy_flux                = var.deploy_flux
-  #flux_repository             = var.flux_repository
 }
 
 module "bastion" {
@@ -48,7 +47,6 @@ module "jumpbox" {
   count                = var.deploy_jumpbox ? 1 : 0
   source               = "./jumpbox"
   resource_group_name  = azurerm_resource_group.this.name
-  azurerm_key_vault_id = azurerm_key_vault.this.id
   vm_subnet_id         = azurerm_subnet.compute.id
   vm_name              = local.vm_name
 }
