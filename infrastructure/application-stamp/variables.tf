@@ -1,3 +1,12 @@
+#General variables for the application stamp
+variable "region" {
+  description = "Region to deploy in Azure"
+}
+
+variable "app_name" {
+  description = "The root name for this application deployment"
+}
+
 variable "core_subscription_id" {
   description = "Core Subscription"
 }
@@ -10,20 +19,13 @@ variable tags {
   description = "Tags to be applied to all resources"
 }
 
-variable "region" {
-  description = "Region to deploy in Azure"
-}
-
-variable "app_name" {
-  description = "The root name for this application deployment"
+# Kubernetes variables of the application stamp
+variable "kubernetes_version" {
+  description = "The version of Kubernetes to deploy"
 }
 
 variable "istio_version" {
   description = "The version of the managed Azure Service Mesh to deploy"
-}
-
-variable "kubernetes_version" {
-  description = "The version of Kubernetes to deploy"
 }
 
 variable "node_sku" {
@@ -36,29 +38,9 @@ variable "node_count" {
   default     = 1
 }
 
-variable "deploy_bastion" {
-  description = "Deploy a bastion host"
-  default     = false
-}
-
-variable "deploy_event_hub" {
-  description = "Deploy an Event Hub namespace"
-  default     = false
-}
-
-variable "deploy_cosmos_db" {
-  description = "Deploy a Cosmos DB instance"
-  default     = false
-}
-
 variable "deploy_flux" {
   description = "Deploy Flux Extension"
   default     = false
-}
-
-variable "deploy_jumpbox" {
-  description = "Deploy Jumpbox"
-  default     = true
 }
 
 variable "flux_repository" {
@@ -69,4 +51,20 @@ variable "flux_repository" {
 variable "flux_app_path" {
   description = "The path to the Flux extension GitOps configuration"
   default     = "./cluster-config"
+}
+
+# Additional resources to deploy
+variable "deploy_event_hub" {
+  description = "Deploy an Event Hub namespace"
+  default     = false
+}
+
+variable "deploy_cosmos_db" {
+  description = "Deploy a Cosmos DB instance"
+  default     = false
+}
+
+variable "deploy_jumpbox" {
+  description = "Deploy Jumpbox"
+  default     = true
 }

@@ -33,11 +33,10 @@ module "application-stamp" {
   core_subscription_id = var.core_subscription
   dev_subscription_id  = var.dev_subscription
   tags                 = local.tags
-  deploy_bastion       = var.deploy_bastion
   deploy_cosmos_db     = var.deploy_cosmos_db
   deploy_event_hub     = var.deploy_event_hub
   deploy_flux          = var.deploy_flux_extension
-  deploy_jumpbox       = true
+  deploy_jumpbox       = var.deploy_jumpbox
   flux_repository      = var.flux_repository
   node_count           = var.node_count
   node_sku             = var.node_sku

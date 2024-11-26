@@ -14,8 +14,8 @@ variable "dev_subscription" {
   description = "Developer Subscription"
 }
 
-variable "deploy_bastion" {
-  description = "Deploy a bastion host"
+variable "deploy_jumpbox" {
+  description = "Deploy a jumpbox + Azure Bastion"
 }
 
 variable "deploy_event_hub" {

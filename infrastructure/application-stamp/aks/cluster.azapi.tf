@@ -9,7 +9,7 @@ resource "azapi_resource" "aks" {
   type      = "Microsoft.ContainerService/managedClusters@2024-06-02-preview"
   name      = local.aks_name
   location  = var.aks_cluster.location
-  parent_id = data.azurerm_resource_group.this.id
+  parent_id = var.aks_cluster.resource_group.id
 
   identity {
     type         = "UserAssigned"
@@ -25,7 +25,7 @@ resource "azapi_resource" "aks" {
       kubernetesVersion    = local.kubernetes_version
       dnsPrefix            = local.aks_name
       enableRBAC           = true
-      disableLocalAccounts = true
+      disableLocalAccounts = false
       nodeResourceGroup    = "${local.aks_name}_nodes_rg"
 
       aadProfile = {

@@ -4,13 +4,12 @@ variable "core_subscription_id" {
 
 variable "region" {
   description = "Region to deploy in Azure"
-  default     = "southcentralus"
 }
 
 variable "app_name" {
   description = "The root name for this application deployment"
 }
 
-variable tags {
+variable "tags" {
   description = "Tags to be applied to all resources"
 }

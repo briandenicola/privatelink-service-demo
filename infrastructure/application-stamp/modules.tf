@@ -2,10 +2,13 @@ module "aks" {
   depends_on = [azurerm_container_registry_cache_rule.mcr_cache_rule]
   source     = "./aks"
   aks_cluster = {
-    name                = local.aks_name
-    resource_group_name = azurerm_resource_group.this.name
-    location            = azurerm_resource_group.this.location
-    version             = var.kubernetes_version
+    name = local.aks_name
+    resource_group = {
+      name = azurerm_resource_group.this.name
+      id   = azurerm_resource_group.this.id
+    }
+    location = azurerm_resource_group.this.location
+    version  = var.kubernetes_version
     istio = {
       version = var.istio_version
     }
@@ -32,19 +35,6 @@ module "aks" {
       enabled    = var.deploy_flux
       repository = var.flux_repository
       app_path   = var.flux_app_path
-    }
-  }
-}
-
-module "bastion" {
-  count  = var.deploy_bastion ? 1 : 0
-  source = "./bastion"
-  bastion_host = {
-    location            = azurerm_resource_group.this.location
-    name                = local.bastion_name
-    resource_group_name = azurerm_resource_group.this.name
-    vnet = {
-      id = azurerm_virtual_network.this.id
     }
   }
 }
@@ -77,6 +67,19 @@ module "eventhub" {
       private_endpoint = {
         subnet_id = azurerm_subnet.private-endpoints.id
       }
+    }
+  }
+}
+
+module "bastion" {
+  count  = var.deploy_jumpbox ? 1 : 0
+  source = "./bastion"
+  bastion_host = {
+    location            = azurerm_resource_group.this.location
+    name                = local.bastion_name
+    resource_group_name = azurerm_resource_group.this.name
+    vnet = {
+      id = azurerm_virtual_network.this.id
     }
   }
 }

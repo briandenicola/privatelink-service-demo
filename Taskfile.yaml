@@ -65,7 +65,7 @@ tasks:
       RG: 
         sh: terraform -chdir=./infrastructure output -raw AKS_RESOURCE_GROUP
       AKS: 
-        sh: terraform -chdir=./infrastructure output -raw AKS_CLUSTER_NAME
+        sh: terraform -chdir=./infrastructure output -raw AKS_NAME
       CMD: '{{default .CLI_ARGS}}'
 
   down:

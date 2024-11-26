@@ -1,13 +1,17 @@
 # Overview
 
-This repository is a demonstration of how to build a locked sandbox environment in Azure leveraging Private Link Scope. It is currently a work in progress
+This repository is a demonstration of how to build a locked sandbox environment in Azure leveraging Private Link Scope. The environment is designed to be a secure environment for developers to build and deploy applications. The environment is designed to be locked down to only allow access to the Azure Core and the Azure Core's resources.  
+
+* The AKS cluster is deployed to take advantage of the new isolated deployment model, where a managed ACR caches containers from mcr.microsoft.com - removing the need for the AKS cluster to have internet access.
+* Each subnet in the application stamp has been configure to disable outbound access.
+* Private Link Service is used to expose the AKS Ingress Controller to your Azure Core
+* Private Link Service is used to expose the Azure Container Registry to your Azure Core
 
 ## Deployed Components for Developers
 Component | Usage
 ------ | ------
 Azure Kubernetes Service | Container Orchestration Runtime Platform  
 Azure Cosmos DB | Data storage for application 
-Azure Key Vault | Secret store 
 Azure Event Hubs | Kafka equivalent resource in Azure
 Azure Container Registry | Azure Container Registry for containers
 Azure Virtual Network  | Azure Virtual Network for all resources and private endpoints
@@ -22,7 +26,7 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
     vi ./infrastructure/azure.tfvars
     #core_subscription = "43a071dd-5b86-475f-960b-59f814e4f070"
     #dev_subscription  = "1fc91beb-c262-400a-a4e0-b5eec229e46e"
-    #deploy_bastion    = false
+    #deploy_jumpbox    = false
     #deploy_cosmos_db  = true
     #deploy_event_hub  = false
     #node_count        = 3
@@ -101,13 +105,6 @@ Azure Private Link Service | Exposes AKS Ingress Control back to your Azure Core
     info: Todos.TodoController[0]
 ```
 
-## Temporary Windows Machine
+## Temporary Administator Machine
 * At times, VM resources maybe required to do deep dive troubleshooting.  
-* This can be accessed through Azure Bastion
-* Native tooling can be used with Azure Bastion Standard SKU
-    * `az network bastion tunnel` creates a secure tunnel to your VM through Bastion
-    * Example: `az network bastion tunnel --name gelding-36358-bastion --resource-group gelding-36358_rg --target-resource-id /subscriptions/17e5343-e92b-4c08-bf19-eb8be6c96991/resourceGroups/gelding-36358_rg/providers/Microsoft.Compute/virtualMachines/gelding-36358-vm --resource-port 22 --port 2222`
-    * You then can ssh into the VM with: `ssh admin@127.0.0.1 -p 2222`
-* A pre-built Windows 11 VM with all required tooling and Subsystem for Linux installed
-    * This [repository](https://github.com/briandenicola/tooling) contains all Windows and Linux tools that I use
-    * Shared Image Gallery with Packer is a great way to build the image template to be used. Another example [repository](https://github.com/briandenicola/azure-windows-template-with-packer/tree/main/scripts)
+* This can be accessed through a free Azure Bastion Developer SKU.  You can SSH into a Linux machine via the Azure Portal to troubleshoot

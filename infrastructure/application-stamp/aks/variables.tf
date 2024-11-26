@@ -1,9 +1,12 @@
 variable "aks_cluster" {
   type = object({
-    name                = string
-    location            = string
-    resource_group_name = string
-    version             = string
+    name     = string
+    location = string
+    resource_group = object({
+      name = string
+      id   = string
+    })
+    version = string
     istio = object({
       version = string
     })

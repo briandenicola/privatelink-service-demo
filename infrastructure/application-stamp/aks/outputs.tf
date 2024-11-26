@@ -1,5 +1,5 @@
 output "AKS_RESOURCE_GROUP" {
-  value     = data.azurerm_resource_group.this.name
+  value     = var.aks_cluster.resource_group.name
   sensitive = false
 }
 
