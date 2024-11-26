@@ -65,3 +65,8 @@ variable "flux_repository" {
   description = "The repository for the Flux extension GitOps configuration"
   default     = "https://github.com/samples/flux-get-started"
 }
+
+variable "flux_app_path" {
+  description = "The path to the Flux extension GitOps configuration"
+  default     = "./cluster-config"
+}

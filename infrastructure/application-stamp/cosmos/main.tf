@@ -1,10 +1,10 @@
 resource "azurerm_cosmosdb_account" "this" {
-  name                      = var.cosmosdb_name
-  resource_group_name       = data.azurerm_resource_group.this.name
-  location                  = data.azurerm_resource_group.this.location
-  offer_type                = "Standard"
-  kind                      = "GlobalDocumentDB"
-  free_tier_enabled         = true
+  name                       = var.cosmos.name
+  location                   = var.cosmos.location
+  resource_group_name        = var.cosmos.resource_group_name
+  offer_type                 = "Standard"
+  kind                       = "GlobalDocumentDB"
+  free_tier_enabled          = true
   automatic_failover_enabled = true
 
   consistency_policy {
@@ -12,7 +12,7 @@ resource "azurerm_cosmosdb_account" "this" {
   }
 
   geo_location {
-    location          = data.azurerm_resource_group.this.location
+    location          = var.cosmos.location
     failover_priority = 0
   }
 }

@@ -1,7 +1,7 @@
 resource "azurerm_bastion_host" "this" {
-  name                = var.bastion_name
-  location            = data.azurerm_resource_group.this.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  name                = var.bastion_host.name
+  location            = var.bastion_host.location
+  resource_group_name = var.bastion_host.resource_group_name
   sku                 = "Developer"
-  virtual_network_id  = var.bastion_vnet_id
+  virtual_network_id  = var.bastion_host.vnet.id
 }

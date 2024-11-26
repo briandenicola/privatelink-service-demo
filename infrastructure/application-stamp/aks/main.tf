@@ -9,9 +9,9 @@ resource "random_integer" "services_cidr" {
 }
 
 locals {
-  aks_name           = var.aks_name
+  aks_name           = var.aks_cluster.name
   aks_node_rg_name   = "${local.aks_name}_nodes_rg"
-  location           = data.azurerm_resource_group.this.location
-  istio_version      = [var.istio_version]
-  kubernetes_version = var.kubernetes_version
+  location           = var.aks_cluster.location
+  istio_version      = [var.aks_cluster.istio.version]
+  kubernetes_version = var.aks_cluster.version
 }

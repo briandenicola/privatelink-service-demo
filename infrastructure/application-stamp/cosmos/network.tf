@@ -1,23 +1,23 @@
 resource "azurerm_private_dns_zone" "privatelink_documents_azure_com" {
   name                = "privatelink.documents.azure.com"
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = var.cosmos.resource_group_name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_documents_azure_com" {
-  name                  = "${var.cosmosdb_name}-link"
+  name                  = "${var.cosmos.name}-link"
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_documents_azure_com.name
-  resource_group_name   = data.azurerm_resource_group.this.name
-  virtual_network_id    = var.virtual_network_id
+  resource_group_name = var.cosmos.resource_group_name
+  virtual_network_id    = var.cosmos.vnet.id
 }
 
 resource "azurerm_private_endpoint" "cosmos_db" {
-  name                = "${var.cosmosdb_name}-endpoint"
-  resource_group_name = data.azurerm_resource_group.this.name
-  location            = data.azurerm_resource_group.this.location
-  subnet_id           = var.private_endpoint_subnet_id
+  name                = "${var.cosmos.name}-endpoint"
+  resource_group_name = var.cosmos.resource_group_name
+  location            = var.cosmos.location
+  subnet_id           = var.cosmos.vnet.private_endpoint.subnet_id
 
   private_service_connection {
-    name                           = "${var.cosmosdb_name}-endpoint"
+    name                           = "${var.cosmos.name}-endpoint"
     private_connection_resource_id = azurerm_cosmosdb_account.this.id
     subresource_names              = ["sql"]
     is_manual_connection           = false

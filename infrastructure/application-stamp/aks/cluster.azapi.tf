@@ -1,7 +1,14 @@
 resource "azapi_resource" "aks" {
+  depends_on = [
+    azurerm_role_assignment.acr_pullrole_node,
+    azurerm_role_assignment.aks_role_assignemnt_dns,
+    azurerm_role_assignment.aks_role_assignemnt_msi,
+    azurerm_role_assignment.aks_role_assignemnt_network
+  ]
+
   type      = "Microsoft.ContainerService/managedClusters@2024-06-02-preview"
   name      = local.aks_name
-  location  = data.azurerm_resource_group.this.location
+  location  = var.aks_cluster.location
   parent_id = data.azurerm_resource_group.this.id
 
   identity {
@@ -21,6 +28,21 @@ resource "azapi_resource" "aks" {
       disableLocalAccounts = true
       nodeResourceGroup    = "${local.aks_name}_nodes_rg"
 
+      aadProfile = {
+        enableAzureRBAC = true
+        managed         = true
+        tenantID        = data.azurerm_client_config.current.tenant_id
+      }
+
+      linuxProfile = {
+        adminUsername = "manager"
+        ssh = {
+          publicKeys = [{
+            keyData = tls_private_key.rsa.public_key_openssh
+          }]
+        }
+      }
+
       networkProfile = {
         networkPlugin     = "azure"
         networkPluginMode = "overlay"
@@ -32,23 +54,25 @@ resource "azapi_resource" "aks" {
         dnsServiceIP      = "100.${random_integer.services_cidr.id}.0.10"
         podCidr           = "100.${random_integer.pod_cidr.id}.0.0/16"
         advancedNetworking = {
-            observability = {
-                enabled = true
-            }
+          observability = {
+            enabled = true
+          }
         }
       }
 
       bootstrapProfile = {
         artifactSource = "Cache"
+        containerRegistryId = var.aks_cluster.container_registry.id
+
       }
 
       agentPoolProfiles = [{
         name              = "system"
         mode              = "System"
-        count             = var.node_count
-        vmSize            = var.node_sku
+        count             = var.aks_cluster.nodes.count
+        vmSize            = var.aks_cluster.nodes.sku
         osDiskSizeGB      = 127
-        vnetSubnetID      = var.aks_subnet_id
+        vnetSubnetID      = var.aks_cluster.vnet.node_subnet.id
         osType            = "Linux"
         osSKU             = "AzureLinux"
         type              = "VirtualMachineScaleSets"
@@ -63,7 +87,7 @@ resource "azapi_resource" "aks" {
         omsagent = {
           enabled = true
           config = {
-            logAnalyticsWorkspaceResourceID = var.log_analytics_workspace_id
+            logAnalyticsWorkspaceResourceID = var.aks_cluster.logs.workspace_id
           }
         }
         azurePolicy = {
@@ -86,29 +110,18 @@ resource "azapi_resource" "aks" {
       }
 
       azureMonitorProfile = {
-        appMonitoring = {
-          autoInstrumentation  = {
-            enabled     = true
-          }
-          openTelemetryLogs = {
-            enabled = true
-          }
-          openTelemetryMetrics = {
-            enabled = true
-          }
-        }
         containerInsights = {
-            enabled                         = true
-            logAnalyticsWorkspaceResourceId = var.log_analytics_workspace_id
-        }        
+          enabled                         = true
+          logAnalyticsWorkspaceResourceId = var.aks_cluster.logs.workspace_id
+        }
         metrics = {
-          enabled   = true
+          enabled = true
         }
       }
 
       securityProfile = {
         defender = {
-          logAnalyticsWorkspaceResourceId = var.log_analytics_workspace_id
+          logAnalyticsWorkspaceResourceId = var.aks_cluster.logs.workspace_id
           securityMonitoring = {
             enabled = true
           }
@@ -138,7 +151,7 @@ resource "azapi_resource" "aks" {
         enablePrivateClusterPublicFQDN = false
         disableRunCommand              = true
         enableVnetIntegration          = true
-        subnetId                       = var.aks_mgmt_subnet_id
+        subnetId                       = var.aks_cluster.vnet.mgmt_subnet.id
       }
 
       serviceMeshProfile = {
@@ -161,7 +174,7 @@ resource "azapi_resource" "aks" {
 resource "azurerm_monitor_diagnostic_setting" "aks" {
   name                       = "diag"
   target_resource_id         = azapi_resource.aks.id
-  log_analytics_workspace_id = var.log_analytics_workspace_id
+  log_analytics_workspace_id = var.aks_cluster.logs.workspace_id
 
   enabled_log {
     category = "kube-apiserver"
