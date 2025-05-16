@@ -47,10 +47,10 @@ variable "node_sku" {
 
 variable "istio_version" {
   description = "The version of the managed Azure Service Mesh to deploy"
-  default     = "asm-1.23"
+  default     = "asm-1.24"
 }
 
 variable "kubernetes_version" {
   description = "The version of Kubernetes to deploy"
-  default     = "1.30"
+  default     = "1.31"
 }
